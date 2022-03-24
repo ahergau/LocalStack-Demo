@@ -1,0 +1,73 @@
+aws s3 mb s3://mybucket --region us-east-1 --endpoint-url http://localhost:4566
+
+
+aws iam create-policy --policy-name my-pol --policy-document file://bucket-policy.txt --endpoint-url http://localhost:4566
+
+
+aws iam create-role --role-name lambda-s3-role --assume-role-policy-document "{"Version": "2012-10-17","Statement": [{ "Effect": "Allow", "Principal": {"Service": "lambda.amazonaws.com"}, "Action": "sts:AssumeRole"}]}"  --endpoint-url http://localhost:4566
+
+
+aws iam attach-role-policy --policy-arn arn:aws:iam::000000000000:policy/my-pol --role-name lambda-s3-role --endpoint-url http://localhost:4566
+
+
+aws lambda create-function --function-name CreateFunction --zip-file fileb://localstackdemo-1.0-SNAPSHOT.jar --handler com.gaurav.localstack.demo.lambda.S3EventHandler --runtime java11 --timeout 30 --memory-size 1024 --role arn:aws:iam::000000000000:role/lambda-s3-role --endpoint-url http://localhost:4566 --region us-east-1 --environment Variables="{PROFILE=LOCAL,AWS_REGION=us-east-1}"
+
+
+
+aws s3api put-bucket-notification-configuration --bucket mybucket --notification-configuration file://notification.json --endpoint-url http://localhost:4566
+
+
+
+aws dynamodb create-table --table-name PersonDetails --attribute-definitions AttributeName=Id,AttributeType=N --key-schema AttributeName=Id,KeyType=HASH --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5 --endpoint-url http://localhost:4566 --region us-east-1
+
+
+aws dynamodb scan --table-name PersonDetails --endpoint-url http://localhost:4566 --region us-east-1
+
+
+aws s3 cp sample.json s3://mybucket/sample.json --endpoint-url http://localhost:4566 --region us-east-1
+
+
+aws dynamodb scan --table-name PersonDetails --endpoint-url http://localhost:4566 --region us-east-1
+
+
+aws lambda delete-function --function-name CreateFunction --endpoint-url=http://localhost:4574
+
+
+
+
+Additional !!!
+
+- aws s3 ls --endpoint-url http://localhost:4566 --region us-east-1
+
+
+-- aws s3 cp ../../sample.json s3://test-bucket/sample.json --endpoint-url http://localhost:4566 --region us-east-1
+
+
+-- aws dynamodb describe-table --table-name PersonDetails --endpoint-url http://localhost:4566 --region us-east-1
+
+-- aws sns list-subscriptions --endpoint-url=http://localhost:4566 --region us-east-1
+
+-- aws sqs get-queue-url --endpoint-url=http://localhost:4566 --region us-east-1
+
+-GET SQS URL - aws sqs list-queues --endpoint-url=http://localhost:4566 --region us-east-1
+
+--SEND SQS MESSAGE-- aws sqs send-message --endpoint-url=http://localhost:4566 --region us-east-1 --queue-url  http://localhost:4566/000000000000/test-sqs --message-body 'Test Message!'
+
+
+-- aws s3 ls s3://sqsbucket --endpoint-url http://localhost:4566 --region us-east-1
+
+-- aws s3 cp s3://sqsbucket/37469c0e-c5d4-486a-a75c-cacb837bbf39 test.txt --endpoint-url http://localhost:4566 --region us-east-1
+
+
+-- aws s3 rm s3://sqsbucket/* --endpoint-url http://localhost:4566 --region us-east-1
+
+-- aws s3 rm s3://test-bucket/* --endpoint-url http://localhost:4566 --region us-east-1
+
+
+
+terraform init
+
+terraform plan
+
+terraform apply --auto-approve
+

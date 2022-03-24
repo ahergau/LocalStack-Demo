@@ -1,0 +1,3 @@
+com\gaurav\localstack\demo\lambda\SQSEventHandler.class
+com\gaurav\localstack\demo\lambda\S3EventHandler.class
+com\gaurav\localstack\demo\model\PersonDetailsVO.class
