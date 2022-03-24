@@ -1,1 +1,3 @@
 /localstack/tf/.terraform
+/target
+/.idea
