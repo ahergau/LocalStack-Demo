@@ -4,6 +4,7 @@
 1. **Lambda-1** to read file from S3 bucket and populate the dynamoDB
 2. **Lambda-2** to read SQS event and read message body and store it into s3 bucket
 
+![img.png](img.png)
 
 **To test the application**
 
