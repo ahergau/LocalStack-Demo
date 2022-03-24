@@ -2,3 +2,5 @@
 /target
 /.idea
 *.iml
+localstack/tf/terraform.tfstate.backup
+localstack/tf/terraform.tfstate

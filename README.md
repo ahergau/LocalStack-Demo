@@ -8,6 +8,12 @@
 
 **To test the application**
 
+**Build the Project** - 
+    
+    - mvn clean install
+
+    - Maven shade plugin will create a FAT jar which is required for lambda execution.
+
 1. **Start localstack**
    1. \localstack\docker-compose up -d
 
